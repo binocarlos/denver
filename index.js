@@ -7,8 +7,8 @@ function Denver(options){
 	EventEmitter.call(this);
 	this._key = options.key || '/denver';
 	this._etcd = new EtcdX({
-		host:options.host,
-		port:options.port
+		host:options.host || '127.0.0.1',
+		port:options.port || 4001
 	})
 }
 
@@ -31,7 +31,7 @@ Denver.prototype.env = function(stacks, done){
 	async.forEachSeries(stacks, function(stack, nextstack){
 		self._etcd.get(self.key('/' + stack), function(err, packet){
 			if(err){
-				return nextstack(err);
+				return nextstack();
 			}
 			packet.node.nodes.forEach(function(node){
 				var key = node.key.replace(self.key('/' + stack + '/'), '');
@@ -54,12 +54,16 @@ Denver.prototype.ls = function(done){
 			return done(err);
 		}
 
-		var nodes = packet.node.nodes.map(function(node){
+		var nodes = (packet.node.nodes || []).map(function(node){
 			return node.key.replace(self.key() + '/', '');
 		})
 
 		done(null, nodes);
 	});	
+}
+
+Denver.prototype.rm = function(stack, done){
+	this._etcd.rmdir(this.key('/' + stack), done);
 }
 
 Denver.prototype.get = function(stack, key, done){

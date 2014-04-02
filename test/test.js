@@ -6,9 +6,9 @@ var should = require('should');
 describe('denver', function(){
 
 	var settings = {
-		host:process.env.YODA_HOST || '127.0.0.1',
-		port:process.env.YODA_PORT || 4001,
-		key:'/denver/test'
+		host:process.env.DENVER_HOST || '127.0.0.1',
+		port:process.env.DENVER_PORT || 4001,
+		key:process.env.DENVER_KEY || '/denver/test'
 	}
 
 	function make_denver(){
@@ -137,6 +137,49 @@ describe('denver', function(){
 
 					hit.app1.should.equal(true);
 					hit.app2.should.equal(true);
+					hit.app3.should.equal(true);
+
+					next();
+				})
+			}
+		], done)
+  })
+
+
+
+  it('should remove a stack', function(done) {
+
+  	this.timeout(2000);
+
+		var den = make_denver();
+
+		async.series([
+			function(next){
+				den.set('app1', 'ADMIN_EMAIL', 'bob@thebuilder.com', next);
+			},
+			function(next){
+				den.set('app2', 'ADMIN_EMAIL', 'bob@thebuilder.com', next);
+			},
+			function(next){
+				den.set('app3', 'ADMIN_EMAIL', 'bob@thebuilder.com', next);
+			},
+			function(next){
+				den.rm('app2', next);
+			},
+			function(next){
+				den.ls(function(err, stacks){
+					if(err){
+						throw err;
+					}
+
+					stacks.length.should.equal(2);
+
+					var hit = {};
+					stacks.forEach(function(s){
+						hit[s] = true;
+					})
+
+					hit.app1.should.equal(true);
 					hit.app3.should.equal(true);
 
 					next();
