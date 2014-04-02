@@ -3,10 +3,10 @@ var async = require('async');
 var util = require('util');
 var EtcdX = require('etcdx');
 
-function Denver(options){
+function Denver(options, etcd){
 	EventEmitter.call(this);
 	this._key = options.key || '/denver';
-	this._etcd = new EtcdX({
+	this._etcd = etcd || new EtcdX({
 		host:options.host || '127.0.0.1',
 		port:options.port || 4001
 	})
