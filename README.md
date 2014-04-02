@@ -1,6 +1,10 @@
 denver
 ======
 
+![Denver](denver.jpg)
+
+![Build status](https://api.travis-ci.org/binocarlos/denver.png)
+
 Create layers of ENV variables saved to etcd and deploy docker containers using them
 
 ## installation
