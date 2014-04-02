@@ -2,7 +2,8 @@
 var program = require('commander');
 var denver = require('./index');
 var version = require('./package.json').version;
-
+var concat = require('concat-stream');
+var async = require('async');
 
 function get_denver(){
 	var settings = {
@@ -149,6 +150,40 @@ program
 
       console.log(st);
     })
+    
+  })
+
+
+program
+  .command('inject <stack>')
+  .description('inject new environment variables from a textfile')
+  .action(function(stack){
+
+    var stacks = get_stacks('docker');
+    var den = get_denver();
+
+    process.stdin.pipe(concat(function(inject){
+      var values = inject.toString().split(/\r?\n/).map(function(line){
+        return line.split('=');
+      })
+
+      async.forEach(values, function(arr, nextarr){
+        
+        if(arr[0]){
+          den.set(stack, arr[0], arr[1], nextarr);  
+        }
+        else{
+          nextarr();
+        }
+        
+      }, function(err){
+        if(err){
+          console.error(err);
+          process.exit(1);
+        }
+      })
+
+    }))
     
   })
 

@@ -206,7 +206,7 @@ ADMIN_EMAIL=bob@thebuilder.com
 
 ``` bash
 $ cat myenv.txt | denver inject myapp
-$ denver env myapp docker
+$ denver docker myapp
 ```
 
 This would print:
@@ -214,9 +214,6 @@ This would print:
 ```
 -e HELLO=world -e ADMIN_EMAIL=bob@thebuilder.com
 ```
-
-
-
 
 ## license
 
