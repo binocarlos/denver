@@ -1,7 +1,7 @@
 denver
 ======
 
-![Denver](denver.jpg)
+![Denver](https://github.com/binocarlos/denver/raw/master/denver.jpg)
 
 ![Build status](https://api.travis-ci.org/binocarlos/denver.png)
 
