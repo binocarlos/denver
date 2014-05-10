@@ -1,15 +1,15 @@
 var EventEmitter = require('events').EventEmitter;
 var async = require('async');
 var util = require('util');
-var EtcdX = require('etcdx');
+var Etcd = require('etcdjs');
 
 function Denver(options, etcd){
 	EventEmitter.call(this);
 	this._key = options.key || '/denver';
-	this._etcd = etcd || new EtcdX({
-		host:options.host || '127.0.0.1',
-		port:options.port || 4001
-	})
+
+	var host = options.host || '127.0.0.1'
+	var port = options.port || 4001
+	this._etcd = etcd || Etcd(host + ':' + port)
 }
 
 util.inherits(Denver, EventEmitter);
@@ -63,12 +63,14 @@ Denver.prototype.ls = function(done){
 }
 
 Denver.prototype.rm = function(stack, done){
-	this._etcd.rmdir(this.key('/' + stack), done);
+	this._etcd.del(this.key('/' + stack), {
+		recursive:true
+	}, done);
 }
 
 Denver.prototype.get = function(stack, key, done){
-	this._etcd.get(this.key('/' + stack + '/' + key), function(err, packet){
-		if(err){
+	this._etcd.get(this.key('/' + stack + '/' + key), function(err, packet){	
+		if(err || !packet){
 			return done(null, '');
 		}
 
