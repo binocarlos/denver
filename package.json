@@ -1,6 +1,6 @@
 {
   "name": "denver",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Create layers of ENV variables saved to etcd and deploy docker containers using them",
   "main": "index.js",
   "scripts": {
