@@ -30,7 +30,7 @@ Denver.prototype.env = function(stacks, done){
 
 	async.forEachSeries(stacks, function(stack, nextstack){
 		self._etcd.get(self.key('/' + stack), function(err, packet){
-			if(err){
+			if(err || !packet){
 				return nextstack();
 			}
 			packet.node.nodes.forEach(function(node){
@@ -50,7 +50,7 @@ Denver.prototype.env = function(stacks, done){
 Denver.prototype.ls = function(done){
 	var self = this;
 	this._etcd.get(this.key(), function(err, packet){
-		if(err){
+		if(err || !packet){
 			return done(err);
 		}
 
