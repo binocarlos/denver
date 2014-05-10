@@ -107,9 +107,11 @@ program
     
   })
 
-function printEnv(){
+function printEnv(cmd){
 
-    var stacks = get_stacks('env');    
+  return function(){
+
+    var stacks = get_stacks(cmd);
     var den = get_denver();
 
     den.env(stacks, function(err, env){
@@ -122,17 +124,18 @@ function printEnv(){
         console.log(key + '=' + env[key]);
       })
     })
+  }
 }
 
 program
   .command('env')
   .description('print the environment for some stacks')
-  .action(printEnv)
+  .action(printEnv('env'))
 
 program
   .command('print')
   .description('print the environment for some stacks')
-  .action(printEnv)
+  .action(printEnv('print'))
 
 program
   .command('docker')
