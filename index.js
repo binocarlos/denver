@@ -100,7 +100,7 @@ Denver.prototype.del = function(stack, key, done){
 	});	
 }
 
-module.exports = function denver(options){
+module.exports = function denver(options, etcd){
 	options = options || {};
-	return new Denver(options);
+	return new Denver(options, etcd);
 }
