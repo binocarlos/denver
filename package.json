@@ -24,10 +24,10 @@
     "url": "https://github.com/binocarlos/denver/issues"
   },
   "dependencies": {
-    "etcdx": "~0.0.1",
     "async": "~0.2.9",
     "commander": "~2.2.0",
-    "concat-stream": "~1.4.4"
+    "concat-stream": "~1.4.4",
+    "etcdjs": "^1.1.1"
   },
   "devDependencies": {
     "mocha": "~1.12.0",
