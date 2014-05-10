@@ -107,11 +107,7 @@ program
     
   })
 
-
-program
-  .command('env')
-  .description('print the environment for some stacks')
-  .action(function(){
+function printEnv(){
 
     var stacks = get_stacks('env');    
     var den = get_denver();
@@ -126,9 +122,17 @@ program
         console.log(key + '=' + env[key]);
       })
     })
-    
-  })
+}
 
+program
+  .command('env')
+  .description('print the environment for some stacks')
+  .action(printEnv)
+
+program
+  .command('print')
+  .description('print the environment for some stacks')
+  .action(printEnv)
 
 program
   .command('docker')
