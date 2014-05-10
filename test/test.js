@@ -1,5 +1,5 @@
 var denver = require('../');
-var Etcd = require('etcdx');
+var Etcd = require('etcdjs');
 var async = require('async');
 var should = require('should');
 
@@ -20,7 +20,7 @@ describe('denver', function(){
 	}
 
 	function make_etcd(){
-		return new Etcd(settings);
+		return Etcd(settings.host + ':' + settings.port);
 	}
 
 	beforeEach(function(done){
@@ -29,7 +29,9 @@ describe('denver', function(){
 
 		var client = make_etcd();
 
-		client.rmdir(settings.key, function(error){
+		client.del(settings.key, {
+			recursive:true
+		}, function(error){
 			setTimeout(done, 100);
 		})
 		
@@ -38,7 +40,9 @@ describe('denver', function(){
 	after(function(done){
 
 		var client = make_etcd();
-		client.rmdir(settings.key, function(error){
+		client.del(settings.key, {
+			recursive:true
+		}, function(error){
 			setTimeout(done, 100);
 		})
 	})
