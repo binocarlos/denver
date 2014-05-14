@@ -1,7 +1,7 @@
 denver
 ======
 
-![Build status](https://api.travis-ci.org/binocarlos/denver.png)
+![Denver](https://github.com/binocarlos/denver/raw/master/denver.jpg)
 
 [![Travis](http://img.shields.io/travis/binocarlos/denver.svg?style=flat)](https://travis-ci.org/binocarlos/denver)
 
