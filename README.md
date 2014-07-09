@@ -3,7 +3,7 @@ denver
 
 ![Denver](https://github.com/binocarlos/denver/raw/master/denver.jpg)
 
-[![Travis](http://img.shields.io/travis/binocarlos/denver.svg?style=flat)](https://travis-ci.org/binocarlos/denver)
+![Build status](https://api.travis-ci.org/binocarlos/denver.svg)
 
 Create layers of ENV variables saved to etcd and deploy docker containers using them
 
